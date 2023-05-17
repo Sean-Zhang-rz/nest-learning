@@ -1,4 +1,3 @@
-declare const module: any;
 import { VersioningType, VERSION_NEUTRAL } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import {
