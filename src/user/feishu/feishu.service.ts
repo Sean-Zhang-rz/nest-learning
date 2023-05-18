@@ -10,6 +10,7 @@ import { Cache } from 'cache-manager';
 import { BusinessException } from '@/common/exceptions/business.exception';
 import { ConfigService } from '@nestjs/config';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { messages } from '@/helper/feishu/message';
 
 @Injectable()
 export class FeishuService {
@@ -37,5 +38,9 @@ export class FeishuService {
       }
     }
     return appToken;
+  }
+   async sendMessage(receive_id_type, params) {
+    const app_token = await this.getAppToken()
+    return messages(receive_id_type, params, app_token as string)
   }
 }
