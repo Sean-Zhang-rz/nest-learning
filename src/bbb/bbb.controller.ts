@@ -1,11 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { AaaService } from 'src/aaa/aaa.service';
 import { BbbService } from './bbb.service';
 import { CreateBbbDto } from './dto/create-bbb.dto';
 import { UpdateBbbDto } from './dto/update-bbb.dto';
 
 @Controller('bbb')
 export class BbbController {
-  constructor(private readonly bbbService: BbbService) {}
+  constructor(
+    private readonly bbbService: BbbService,
+    private readonly aaaService: AaaService,
+  ) {}
 
   @Post()
   create(@Body() createBbbDto: CreateBbbDto) {
@@ -14,7 +26,8 @@ export class BbbController {
 
   @Get()
   findAll() {
-    return this.bbbService.findAll();
+    // return this.bbbService.findAll();
+    return `This action return all bbb ${this.aaaService.findAll()}`;
   }
 
   @Get(':id')
