@@ -1,21 +1,29 @@
 import { Module } from '@nestjs/common';
-import { CacheModule } from '@nestjs/cache-manager';
-import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './user/user.module';
-import { getConfig } from './utils';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AaaModule } from './aaa/aaa.module';
+import { BbbModule } from './bbb/bbb.module';
+
 @Module({
-  imports: [
-    CacheModule.register({
-       isGlobal: true,
-    }),
-    ConfigModule.forRoot({
-      ignoreEnvFile: true,
-      isGlobal: true,
-      load: [getConfig],
-    }),
-    UserModule,
-  ],
-  controllers: [],
-  providers: [],
+  imports: [AaaModule, BbbModule],
+  controllers: [AppController],
+  providers: [AppService, {
+    provide: 'person',
+    useValue: {
+      name: 'aaa',
+      age: 20
+    }
+  }, {
+    provide: 'person2',
+    useFactory() {
+      return {
+        name: 'aaa',
+        desc: 'person2'
+      }
+    }
+  }, {
+    provide: 'person4',
+    useExisting: 'person2'
+  }],
 })
 export class AppModule {}
