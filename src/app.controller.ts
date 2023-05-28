@@ -8,10 +8,14 @@ import {
   ParseBoolPipe,
   ParseIntPipe,
   Query,
+  SetMetadata,
   UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import { AaaFilter } from './aaa.filter';
 import { AppService } from './app.service';
+import { AaaGuard } from './aaa.guard';
+import { Aaa } from './aaa.decorator';
 
 @Controller()
 export class AppController {
@@ -22,6 +26,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/xxx/:aaa')
+  @Aaa('admin')
+  @UseGuards(AaaGuard)
   @UseFilters(AaaFilter)
   getHello(
     @Param('aaa', ParseIntPipe) aaa: number,
