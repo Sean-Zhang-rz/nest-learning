@@ -4,6 +4,10 @@ import {
   HttpException,
   HttpStatus,
   Inject,
+  Param,
+  ParseBoolPipe,
+  ParseIntPipe,
+  Query,
   UseFilters,
 } from '@nestjs/common';
 import { AaaFilter } from './aaa.filter';
@@ -17,11 +21,16 @@ export class AppController {
   private readonly person2: { name: string; desc: string };
   constructor(private readonly appService: AppService) {}
 
-  @Get()
+  @Get('/xxx/:aaa')
   @UseFilters(AaaFilter)
-  getHello(): string {
-    console.log(this.person);
-    console.log(this.person2);
+  getHello(
+    @Param('aaa', ParseIntPipe) aaa: number,
+    @Query('bbb', ParseBoolPipe) bbb: boolean,
+  ): string {
+    // console.log(this.person);
+    // console.log(this.person2);
+    console.log(aaa);
+    console.log(bbb);
 
     // return this.appService.getHello();
     throw new HttpException('xxx', HttpStatus.BAD_REQUEST);
