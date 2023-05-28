@@ -8,7 +8,6 @@ import {
   ParseBoolPipe,
   ParseIntPipe,
   Query,
-  SetMetadata,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
