@@ -5,6 +5,7 @@ import { AaaModule } from './aaa/aaa.module';
 import { BbbModule } from './bbb/bbb.module';
 import { AaaGuard } from './aaa.guard';
 import { AaaInterceptor } from './aaa.interceptor';
+import { Aaa2Guard } from './Aaa2.guard';
 
 @Module({
   imports: [AaaModule, BbbModule],
@@ -12,6 +13,7 @@ import { AaaInterceptor } from './aaa.interceptor';
   providers: [
     AppService,
     AaaGuard,
+    Aaa2Guard,
     AaaInterceptor,
     {
       provide: 'person',

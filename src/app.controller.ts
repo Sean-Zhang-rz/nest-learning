@@ -15,6 +15,11 @@ import { AaaFilter } from './aaa.filter';
 import { AppService } from './app.service';
 import { AaaGuard } from './aaa.guard';
 import { Aaa } from './aaa.decorator';
+import { Aaa2Filter } from './Aaa2.filter';
+import { AaaException } from './AaaException';
+import { Aaa2Guard } from './Aaa2.guard';
+import { Role } from './Role/inde';
+import { Roles } from './Role/role.decorator';
 
 @Controller()
 export class AppController {
@@ -24,20 +29,20 @@ export class AppController {
   private readonly person2: { name: string; desc: string };
   constructor(private readonly appService: AppService) {}
 
-  @Get('/xxx/:aaa')
-  @Aaa('admin')
-  @UseGuards(AaaGuard)
-  @UseFilters(AaaFilter)
+  @Get()
+  // @Aaa('admin')
+  @UseFilters(Aaa2Filter)
+  @Roles(Role.Admin)
+  @UseGuards(Aaa2Guard)
   getHello(
-    @Param('aaa', ParseIntPipe) aaa: number,
-    @Query('bbb', ParseBoolPipe) bbb: boolean,
+    // @Param('aaa', ParseIntPipe) aaa: number,
+    // @Query('bbb', ParseBoolPipe) bbb: boolean,
   ): string {
     // console.log(this.person);
     // console.log(this.person2);
-    console.log(aaa);
-    console.log(bbb);
 
     // return this.appService.getHello();
-    throw new HttpException('xxx', HttpStatus.BAD_REQUEST);
+    // throw new HttpException('xxx', HttpStatus.BAD_REQUEST);
+    throw new AaaException('aaa', 'bbb')
   }
 }
