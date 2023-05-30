@@ -6,9 +6,10 @@ import { BbbModule } from './bbb/bbb.module';
 import { AaaGuard } from './aaa.guard';
 import { AaaInterceptor } from './aaa.interceptor';
 import { Aaa2Guard } from './Aaa2.guard';
+import { DynamicModModule } from './dynamic-mod/dynamic-mod.module';
 
 @Module({
-  imports: [AaaModule, BbbModule],
+  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2})],
   controllers: [AppController],
   providers: [
     AppService,
