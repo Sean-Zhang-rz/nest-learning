@@ -7,9 +7,10 @@ import { AaaGuard } from './aaa.guard';
 import { AaaInterceptor } from './aaa.interceptor';
 import { Aaa2Guard } from './Aaa2.guard';
 import { DynamicModModule } from './dynamic-mod/dynamic-mod.module';
+import { CccModule } from './ccc/ccc.module';
 
 @Module({
-  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2})],
+  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), CccModule.register({aaa: 1, bbb:2})],
   controllers: [AppController],
   providers: [
     AppService,
