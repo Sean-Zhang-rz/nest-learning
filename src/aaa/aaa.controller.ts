@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
+import { MapInterceptor } from 'src/map.interceptor';
 import { AaaService } from './aaa.service';
 import { CreateAaaDto } from './dto/create-aaa.dto';
 import { UpdateAaaDto } from './dto/update-aaa.dto';
 
 @Controller('aaa')
+@UseInterceptors(MapInterceptor)
 export class AaaController {
   constructor(private readonly aaaService: AaaService) {}
 
