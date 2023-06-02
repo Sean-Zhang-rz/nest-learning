@@ -9,9 +9,10 @@ import { Aaa2Guard } from './Aaa2.guard';
 import { DynamicModModule } from './dynamic-mod/dynamic-mod.module';
 import { CccModule } from './ccc/ccc.module';
 import { AaaMiddleware } from './aaa.middleware';
+import { EeeModule } from './eee/eee.module';
 
 @Module({
-  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), CccModule.register({aaa: 1, bbb:2})],
+  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), CccModule.register({aaa: 1, bbb:2}), EeeModule],
   controllers: [AppController],
   providers: [
     AppService,
