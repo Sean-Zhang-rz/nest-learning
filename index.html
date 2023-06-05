@@ -26,10 +26,9 @@
             const data = new FormData()
             data.set('name', 'sean')
             data.set('age', 20)
-            console.log(fileInput, fileInput.files);
             const input= [...fileInput.files]
             input.forEach(item => {
-              data.append('bbb', item)
+              data.append('aaa', item)
             })
 
             const res = await axios.post('http://localhost:3000/upload', data, {
