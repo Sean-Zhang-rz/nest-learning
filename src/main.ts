@@ -3,7 +3,9 @@ import { AppModule } from './app.module';
 import { CountInterceptor } from './count.interceptor';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: true
+  });
   app.useGlobalInterceptors(new CountInterceptor())
   await app.listen(3000);
 }

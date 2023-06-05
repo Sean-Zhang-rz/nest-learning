@@ -10,9 +10,10 @@ import { DynamicModModule } from './dynamic-mod/dynamic-mod.module';
 import { CccModule } from './ccc/ccc.module';
 import { AaaMiddleware } from './aaa.middleware';
 import { EeeModule } from './eee/eee.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
-  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), CccModule.register({aaa: 1, bbb:2}), EeeModule],
+  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), CccModule.register({aaa: 1, bbb:2}), EeeModule, UploadModule],
   controllers: [AppController],
   providers: [
     AppService,

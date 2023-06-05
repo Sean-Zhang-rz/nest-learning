@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   HttpException,
@@ -7,9 +8,12 @@ import {
   Param,
   ParseBoolPipe,
   ParseIntPipe,
+  Post,
   Query,
+  UploadedFile,
   UseFilters,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AaaFilter } from './aaa.filter';
 import { AppService } from './app.service';
@@ -20,6 +24,7 @@ import { AaaException } from './AaaException';
 import { Aaa2Guard } from './Aaa2.guard';
 import { Role } from './Role/inde';
 import { Roles } from './Role/role.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller()
 export class AppController {
@@ -46,3 +51,4 @@ export class AppController {
     throw new AaaException('aaa', 'bbb')
   }
 }
+
