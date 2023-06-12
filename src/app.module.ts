@@ -11,9 +11,31 @@ import { CccModule } from './ccc/ccc.module';
 import { AaaMiddleware } from './aaa.middleware';
 import { EeeModule } from './eee/eee.module';
 import { UploadModule } from './upload/upload.module';
+import { UserModule } from './user/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './user/entities/user.entity';
 
 @Module({
-  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), CccModule.register({aaa: 1, bbb:2}), EeeModule, UploadModule],
+  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), 
+    CccModule.register({aaa: 1, bbb:2}), EeeModule, UploadModule, UserModule,
+    UserModule,
+    TypeOrmModule.forRoot({
+      type:'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'sean',
+      database: 'typeorm_test',
+      synchronize: true,
+      logging: true,
+      entities:[User],
+      poolSize:10,
+      connectorPackage:'mysql2',
+      extra:{
+        authPluguin: 'sha256_password'
+      }
+    })
+  ],
   controllers: [AppController],
   providers: [
     AppService,
