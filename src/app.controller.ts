@@ -22,7 +22,7 @@ import { Aaa } from './aaa.decorator';
 import { Aaa2Filter } from './Aaa2.filter';
 import { AaaException } from './AaaException';
 import { Aaa2Guard } from './Aaa2.guard';
-import { Role } from './Role/inde';
+import { Role } from './Role/index';
 import { Roles } from './Role/role.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -36,19 +36,19 @@ export class AppController {
 
   @Get()
   // @Aaa('admin')
-  @UseFilters(Aaa2Filter)
-  @Roles(Role.Admin)
-  @UseGuards(Aaa2Guard)
-  getHello(
+  // @UseFilters(Aaa2Filter)
+  // @Roles(Role.Admin)
+  // @UseGuards(Aaa2Guard)
+  async getHello(
     // @Param('aaa', ParseIntPipe) aaa: number,
     // @Query('bbb', ParseBoolPipe) bbb: boolean,
-  ): string {
+  ): Promise<void> {
     // console.log(this.person);
     // console.log(this.person2);
 
     // return this.appService.getHello();
     // throw new HttpException('xxx', HttpStatus.BAD_REQUEST);
-    throw new AaaException('aaa', 'bbb')
+    // throw new AaaException('aaa', 'bbb')
+    await this.appService.getHello()
   }
 }
-

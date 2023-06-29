@@ -1,3 +1,4 @@
+import {createClient} from 'redis'
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,7 +15,7 @@ import { UploadModule } from './upload/upload.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
-
+import { Permission } from './user/entities/permission.entity';
 @Module({
   imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), 
     CccModule.register({aaa: 1, bbb:2}), EeeModule, UploadModule, UserModule,
@@ -25,19 +26,32 @@ import { User } from './user/entities/user.entity';
       port: 3306,
       username: 'root',
       password: 'sean',
-      database: 'typeorm_test',
+      database: 'acl_test',
       synchronize: true,
       logging: true,
-      entities:[User],
+      entities:[User, Permission],
       poolSize:10,
       connectorPackage:'mysql2',
       extra:{
         authPluguin: 'sha256_password'
       }
-    })
+    }),
   ],
   controllers: [AppController],
   providers: [
+    {
+      provide:'REDIS_CLIENT',
+      async useFactory() {
+        const client = createClient({
+          socket: {
+            host: 'localhost',
+            port: 6379
+          }
+        })
+        await client.connect();
+        return client
+      }
+    },
     AppService,
     AaaGuard,
     Aaa2Guard,
