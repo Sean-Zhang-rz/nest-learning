@@ -1,5 +1,6 @@
-import {createClient} from 'redis'
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AaaModule } from './aaa/aaa.module';
@@ -13,14 +14,19 @@ import { AaaMiddleware } from './aaa.middleware';
 import { EeeModule } from './eee/eee.module';
 import { UploadModule } from './upload/upload.module';
 import { UserModule } from './user/user.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
 import { Permission } from './user/entities/permission.entity';
 import { RedisModule } from './redis/redis.module';
+import config from './config/index';
 @Module({
-  imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), 
+  imports: [ConfigModule.forRoot({
+      ignoreEnvFile: true,
+      isGlobal: true,
+      load:[config]
+    }), AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), 
     CccModule.register({aaa: 1, bbb:2}), EeeModule, UploadModule, UserModule,
-    UserModule, RedisModule,
+    UserModule, RedisModule, 
+    
     TypeOrmModule.forRoot({
       type:'mysql',
       host: 'localhost',
@@ -37,6 +43,7 @@ import { RedisModule } from './redis/redis.module';
         authPluguin: 'sha256_password'
       }
     }),
+    
   ],
   controllers: [AppController],
   providers: [

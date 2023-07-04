@@ -42,13 +42,13 @@ export class AppController {
   async getHello(
     // @Param('aaa', ParseIntPipe) aaa: number,
     // @Query('bbb', ParseBoolPipe) bbb: boolean,
-  ): Promise<void> {
+  ): Promise<{ config: any; }> {
     // console.log(this.person);
     // console.log(this.person2);
 
     // return this.appService.getHello();
     // throw new HttpException('xxx', HttpStatus.BAD_REQUEST);
     // throw new AaaException('aaa', 'bbb')
-    await this.appService.getHello()
+    return this.appService.getHello()
   }
 }
