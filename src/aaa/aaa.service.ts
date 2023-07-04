@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { User } from 'src/user/entities/user.entity';
+import { EntityManager } from 'typeorm';
 import { CreateAaaDto } from './dto/create-aaa.dto';
 import { UpdateAaaDto } from './dto/update-aaa.dto';
 
 @Injectable()
 export class AaaService {
+
+  @InjectEntityManager()
+  private entityManager: EntityManager
+
   create(createAaaDto: CreateAaaDto) {
     return 'This action adds a new aaa';
   }

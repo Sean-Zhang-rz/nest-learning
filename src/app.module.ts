@@ -16,10 +16,11 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
 import { Permission } from './user/entities/permission.entity';
+import { RedisModule } from './redis/redis.module';
 @Module({
   imports: [AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), 
     CccModule.register({aaa: 1, bbb:2}), EeeModule, UploadModule, UserModule,
-    UserModule,
+    UserModule, RedisModule,
     TypeOrmModule.forRoot({
       type:'mysql',
       host: 'localhost',
@@ -39,19 +40,6 @@ import { Permission } from './user/entities/permission.entity';
   ],
   controllers: [AppController],
   providers: [
-    {
-      provide:'REDIS_CLIENT',
-      async useFactory() {
-        const client = createClient({
-          socket: {
-            host: 'localhost',
-            port: 6379
-          }
-        })
-        await client.connect();
-        return client
-      }
-    },
     AppService,
     AaaGuard,
     Aaa2Guard,

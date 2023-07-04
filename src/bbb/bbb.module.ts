@@ -7,5 +7,6 @@ import { AaaModule } from 'src/aaa/aaa.module';
   // imports:[AaaModule],
   controllers: [BbbController],
   providers: [BbbService],
+  exports: [BbbService]
 })
 export class BbbModule {}

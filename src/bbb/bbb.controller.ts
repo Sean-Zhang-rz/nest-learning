@@ -6,13 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { AaaService } from 'src/aaa/aaa.service';
+import { LoginGuard } from 'src/login.guard';
 import { BbbService } from './bbb.service';
-import { CreateBbbDto } from './dto/create-bbb.dto';
-import { UpdateBbbDto } from './dto/update-bbb.dto';
 
-@Controller({ host: ':host.0.0.1', path: 'bbb' })
+@Controller('bbb')
 export class BbbController {
   constructor(
     private readonly bbbService: BbbService,
@@ -20,16 +20,19 @@ export class BbbController {
   ) {}
 
   @Get('bbb')
+  @UseGuards(LoginGuard)
   hello() {
     return 'hello';
   }
   @Get()
+  @UseGuards(LoginGuard)
   findAll() {
-    // return this.bbbService.findAll();
-    return `This action return all bbb ${this.aaaService.findAll()}`;
+    return this.bbbService.findAll();
+    // return `This action return all bbb ${this.aaaService.findAll()}`;
   }
 
   @Get(':id')
+  @UseGuards(LoginGuard)
   findOne(@Param('id') id: string) {
     return this.bbbService.findOne(+id);
   }
