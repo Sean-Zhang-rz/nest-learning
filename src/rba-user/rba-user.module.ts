@@ -9,6 +9,7 @@ import { User } from './entities/rba-user.entity';
     TypeOrmModule.forFeature([User])
   ],
   controllers: [RbaUserController],
-  providers: [RbaUserService]
+  providers: [RbaUserService],
+  exports:[RbaUserService]
 })
 export class RbaUserModule {}

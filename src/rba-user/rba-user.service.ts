@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
-import { EntityManager } from 'typeorm';
+import { EntityManager, In } from 'typeorm';
 import { CreateRbaUserDto } from './dto/create-rba-user.dto';
 import { UpdateRbaUserDto } from './dto/update-rba-user.dto';
 import { UserLoginDto } from './dto/user-login.dto';
@@ -120,8 +120,26 @@ export class RbaUserService {
     }
 
     return user;
-}
+  }
 
+  async findRolesByIds(roleIds: number[]) {
+    return this.entityManager.find(Role, {
+      where: {
+        id: In(roleIds)
+      },
+      relations: {
+        permissions: true
+      }
+    });
+  }
+
+  async findUserById(userId: number) {
+    return await this.entityManager.findOne(User, {
+        where: {
+            id: userId
+        }
+    });
+}
 
 
 }

@@ -21,6 +21,8 @@ import { User } from './rba-user/entities/rba-user.entity';
 import { Permission } from './rba-user/entities/permission.entity';
 import { Role } from './rba-user/entities/role.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { LoginGuard } from './login/login.guard';
+import { PermissionGuard } from './permission/permission.guard';
 @Module({
   imports: [ConfigModule.forRoot({
       ignoreEnvFile: true,
@@ -31,7 +33,7 @@ import { JwtModule } from '@nestjs/jwt';
       global: true,
       secret: 'sean',
       signOptions: {
-        expiresIn: '7d'
+        expiresIn: '30m'
       }
     }),
     AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), 
@@ -61,6 +63,14 @@ import { JwtModule } from '@nestjs/jwt';
     AaaGuard,
     Aaa2Guard,
     AaaInterceptor,
+    {
+      provide: 'APP_GUARD',
+      useClass: LoginGuard
+    },
+    {
+      provide: 'APP_GUARD',
+      useClass: PermissionGuard
+    },
     {
       provide: 'person',
       useValue: {
