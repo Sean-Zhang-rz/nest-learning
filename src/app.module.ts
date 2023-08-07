@@ -14,35 +14,45 @@ import { AaaMiddleware } from './aaa.middleware';
 import { EeeModule } from './eee/eee.module';
 import { UploadModule } from './upload/upload.module';
 import { UserModule } from './user/user.module';
-import { User } from './user/entities/user.entity';
-import { Permission } from './user/entities/permission.entity';
 import { RedisModule } from './redis/redis.module';
+import { RbaUserModule } from './rba-user/rba-user.module';
 import config from './config/index';
+import { User } from './rba-user/entities/rba-user.entity';
+import { Permission } from './rba-user/entities/permission.entity';
+import { Role } from './rba-user/entities/role.entity';
+import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [ConfigModule.forRoot({
       ignoreEnvFile: true,
       isGlobal: true,
       load:[config]
-    }), AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), 
+    }), 
+    JwtModule.register({
+      global: true,
+      secret: 'sean',
+      signOptions: {
+        expiresIn: '7d'
+      }
+    }),
+    AaaModule, BbbModule, DynamicModModule.register({aaa: 1, bbb:2}), 
     CccModule.register({aaa: 1, bbb:2}), EeeModule, UploadModule, UserModule,
-    UserModule, RedisModule, 
-    
+    UserModule, RedisModule, RbaUserModule,
     TypeOrmModule.forRoot({
       type:'mysql',
       host: 'localhost',
       port: 3306,
       username: 'root',
       password: 'sean',
-      database: 'acl_test',
+      database: 'rbac_test',
       synchronize: true,
       logging: true,
-      entities:[User, Permission],
+      entities:[User, Role, Permission],
       poolSize:10,
       connectorPackage:'mysql2',
       extra:{
         authPluguin: 'sha256_password'
       }
-    }),
+    }), 
     
   ],
   controllers: [AppController],
